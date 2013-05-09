@@ -694,9 +694,9 @@
 
 		_setDate: function(date, which){
 			if (!which || which == 'date')
-				this.date = date;
+				this.date = new Date(date.valueOf());
 			if (!which || which  == 'view')
-				this.viewDate = date;
+				this.viewDate = new Date(date.valueOf());
 			this.fill();
 			this.setValue();
 			this.element.trigger({
