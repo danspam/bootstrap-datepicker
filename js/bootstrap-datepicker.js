@@ -34,7 +34,8 @@
 		var that = this;
 
 		this.element = $(element);
-		this.language = options.language||this.element.data('date-language')||"en";
+		this.language = options.language || this.element.data('date-language') || "en";
+		this.showLeft = options.showLeft || false;
 		this.language = this.language in dates ? this.language : this.language.split('-')[0]; //Check if "de-DE" style date is available, if not language should fallback to 2 letter code eg "de"
 		this.language = this.language in dates ? this.language : "en";
 		this.isRTL = dates[this.language].rtl||false;
@@ -60,7 +61,7 @@
 		if(this.isInline) {
 			this.picker.addClass('datepicker-inline').appendTo(this.element);
 		} else {
-			this.picker.addClass('datepicker-dropdown dropdown-menu');
+		    this.picker.addClass((this.showLeft ? 'datepicker-dropdown-left' : 'datepicker-dropdown') + ' dropdown-menu');
 		}
 		if (this.isRTL){
 			this.picker.addClass('datepicker-rtl');
@@ -214,7 +215,7 @@
 				[$(document), {
 					mousedown: $.proxy(function (e) {
 						// Clicked outside the datepicker, hide it
-						if ($(e.target).closest('.datepicker.datepicker-inline, .datepicker.datepicker-dropdown').length === 0) {
+					    if ($(e.target).closest('.datepicker.datepicker-inline, .datepicker.datepicker-dropdown, .datepicker.datepicker-dropdown-left').length === 0) {
 							this.hide();
 						}
 					}, this)
@@ -357,6 +358,9 @@
 						}).first().css('z-index'))+10;
 			var offset = this.component ? this.component.parent().offset() : this.element.offset();
 			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(true);
+			if (this.showLeft) {
+			    offset.left -= this.picker.outerWidth() - (this.component ? this.component.parent().outerWidth() : this.element.outerWidth());
+			}
 			this.picker.css({
 				top: offset.top + height,
 				left: offset.left,
