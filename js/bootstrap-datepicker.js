@@ -61,7 +61,10 @@
 		if(this.isInline) {
 			this.picker.addClass('datepicker-inline').appendTo(this.element);
 		} else {
-		    this.picker.addClass((this.showLeft ? 'datepicker-dropdown-left' : 'datepicker-dropdown') + ' dropdown-menu');
+		    this.picker.addClass('datepicker-dropdown dropdown-menu');
+		    if (this.showLeft) {
+		        this.picker.addClass('datepicker-dropdown-left');
+		    }
 		}
 		if (this.isRTL){
 			this.picker.addClass('datepicker-rtl');
